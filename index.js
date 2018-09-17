@@ -21,11 +21,12 @@ module.exports = function (dnaBranch) {
 
 const walk = function (branch, branchRoots, branchName) {
   let results = []
-  if (typeof branch.build === 'object' && typeof branch.cwd === 'string') {
+  let isCell = typeof branch.build === 'object' && typeof branch.cwd === 'string'
+  if (isCell) {
     let cellInfo = {
       name: branch.name || branchName,
       dna: branch,
-      groups: branchRoots.concat(branch.groups || []),
+      groups: consolidateGroups(branchRoots, branch),
       cwd: branch.cwd
     }
     results.push(cellInfo)
@@ -38,4 +39,14 @@ const walk = function (branch, branchRoots, branchName) {
     results = results.concat(walk(branch[key], branchRoots, key))
   }
   return results
+}
+
+const consolidateGroups = function (branchRoots, branch) {
+  if (branch.group) {
+    return branchRoots.concat([branch.group])
+  }
+  if (branch.groups) {
+    return branchRoots.concat(branch.groups)
+  }
+  return branchRoots
 }

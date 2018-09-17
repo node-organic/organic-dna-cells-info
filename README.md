@@ -49,3 +49,10 @@ console.log(cells) // will print Array of CellInfo structures
   cwd: String // cell working directory
 }
 ```
+
+## notes
+
+Cells are deep searched within given dna branch structure:
+
+* once dna branch holds `cwd` and `build` properties it is considered a cell
+* cell's groups are consolidated from their (deep) nesting level path concatenated with their implicit `groups` or `group` values

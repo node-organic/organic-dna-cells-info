@@ -4,7 +4,12 @@
   "description": "extract cells info from dna branch",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "eslint ./ && jest",
+    "preversion": "npm test",
+    "release-patch": "npm version patch && npm publish",
+    "release-minor": "npm version minor && npm publish",
+    "release-major": "npm version major && npm publish",
+    "postversion": "git push origin master && git push origin master --tags"
   },
   "author": "Boris Filipov",
   "license": "MIT",
