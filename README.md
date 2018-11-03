@@ -46,7 +46,8 @@ console.log(cells) // will print Array of CellInfo structures
   dna: DNA, // cell's dna
   name: String, // cell's name
   groups: Array[String], // cell's groups
-  cwd: String // cell working directory
+  cwd: String, // cell working directory
+  dnaBranchPath: String // dot notated dna branch path
 }
 ```
 
@@ -54,5 +55,5 @@ console.log(cells) // will print Array of CellInfo structures
 
 Cells are deep searched within given dna branch structure:
 
-* once dna branch holds `cwd` and `build` properties it is considered a cell
-* cell's groups are consolidated from their (deep) nesting level path concatenated with their implicit `groups` or `group` values
+* every dna branch holding `cwd` and `build` properties is considered a cell
+* cell's groups are formed by their (deep) nesting level path concatenated with their implicit `groups` or `group` values

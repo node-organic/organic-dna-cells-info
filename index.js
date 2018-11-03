@@ -5,7 +5,8 @@
    dna: DNA,
    name: String,
    groups: Array[String],
-   cwd: String
+   cwd: String,
+   dnaBranchPath: String
  }
 
  where `dna`, `name`, `groups` and `cwd` are computed as follows:
@@ -14,6 +15,7 @@
  * * groups reflects to the branch.groups concatinated with the branch's
      path split as single names
  * * cwd reflects to the branch.cwd
+ * * dnaBranchPath contains dot notated dna branch path
  */
 module.exports = function (dnaBranch) {
   return walk(dnaBranch, [], '')
@@ -27,7 +29,8 @@ const walk = function (branch, branchRoots, branchName) {
       name: branch.name || branchName,
       dna: branch,
       groups: consolidateGroups(branchRoots, branch),
-      cwd: branch.cwd
+      cwd: branch.cwd,
+      dnaBranchPath: branchRoots.concat([branchName]).filter(v => v).join('.')
     }
     results.push(cellInfo)
   }
