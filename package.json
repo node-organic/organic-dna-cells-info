@@ -4,8 +4,8 @@
   "description": "extract cells info from dna branch",
   "main": "index.js",
   "scripts": {
-    "test": "eslint ./ && jest",
-    "preversion": "npm test",
+    "test": "jest",
+    "preversion": "eslint ./ && npm test",
     "release-patch": "npm version patch && npm publish",
     "release-minor": "npm version minor && npm publish",
     "release-major": "npm version major && npm publish",
@@ -14,10 +14,11 @@
   "author": "Boris Filipov",
   "license": "MIT",
   "devDependencies": {
-    "jest": "^23.5.0",
+    "jest": "^24.5.0",
     "eslint": "^4.18.2",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jest": "^21.24.1",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1"

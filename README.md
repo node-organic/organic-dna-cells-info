@@ -11,27 +11,27 @@ const dnaBranch = {
   'apis': {
     'v1': {
       'name': 'legacy-v1',
-      'cwd': './v1',
-      'build': {}
+      'cellKind': 'test',
+      'cellInfo': 'v1'
     },
     'v2': {
-      'cwd': './v2',
-      'build': {}
+      'cellKind': 'test',
+      'cellInfo': 'v1'
     },
-    'cwd': './apis',
-    'build': {}
+    'cellKind': 'test',
+    'cellInfo': 'v1'
   },
   'webapps': {
     '2018': {
       'client': {
-        'cwd': './client',
-        'build': {}
+        'cellKind': 'test',
+        'cellInfo': 'v1'
       }
     }
   },
   'supervisor': {
-    'cwd': './supervisor',
-    'build': {}
+    'cellKind': 'test',
+    'cellInfo': 'v1'
   }
 }
 
@@ -46,7 +46,6 @@ console.log(cells) // will print Array of CellInfo structures
   dna: DNA, // cell's dna
   name: String, // cell's name
   groups: Array[String], // cell's groups
-  cwd: String, // cell working directory
   dnaBranchPath: String // dot notated dna branch path
 }
 ```
@@ -55,5 +54,5 @@ console.log(cells) // will print Array of CellInfo structures
 
 Cells are deep searched within given dna branch structure:
 
-* every dna branch holding `cwd` and `build` properties is considered a cell
+* every dna branch holding `cellKind` and `cellInfo` properties is considered a cell
 * cell's groups are formed by their (deep) nesting level path concatenated with their implicit `groups` or `group` values

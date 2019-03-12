@@ -10,26 +10,29 @@
  }
 
  where `dna`, `name`, `groups` and `cwd` are computed as follows:
- * * name reflects to dna branch having both `build` and `cwd` properties
- * * dna reflects to the dna branch
+ * * name reflects to dna branch having both `cellKind` and `cellInfo` properties
+ * * dna reflects to the dna branch itself
  * * groups reflects to the branch.groups concatinated with the branch's
      path split as single names
- * * cwd reflects to the branch.cwd
  * * dnaBranchPath contains dot notated dna branch path
  */
-module.exports = function (dnaBranch) {
-  return walk(dnaBranch, [], '')
+module.exports = function (dnaBranch, cellIdentifierFn) {
+  return walk(dnaBranch, [], '', cellIdentifierFn || defaultCellIdentifierFn)
 }
 
-const walk = function (branch, branchRoots, branchName) {
+const defaultCellIdentifierFn = function (branch) {
+  return typeof branch.cellKind === 'string' &&
+    branch.cellInfo === 'v1'
+}
+
+const walk = function (branch, branchRoots, branchName, cellIdentifierFn) {
   let results = []
-  let isCell = typeof branch.build === 'object' && typeof branch.cwd === 'string'
+  let isCell = cellIdentifierFn(branch)
   if (isCell) {
     let cellInfo = {
       name: branch.name || branchName,
       dna: branch,
       groups: consolidateGroups(branchRoots, branch),
-      cwd: branch.cwd,
       dnaBranchPath: branchRoots.concat([branchName]).filter(v => v).join('.')
     }
     results.push(cellInfo)
@@ -38,8 +41,8 @@ const walk = function (branch, branchRoots, branchName) {
     branchRoots = branchRoots.concat([branchName])
   }
   for (let key in branch) {
-    if (key === 'build' || typeof branch[key] !== 'object') continue
-    results = results.concat(walk(branch[key], branchRoots, key))
+    if (typeof branch !== 'object') continue
+    results = results.concat(walk(branch[key], branchRoots, key, cellIdentifierFn))
   }
   return results
 }
