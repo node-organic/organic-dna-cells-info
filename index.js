@@ -26,6 +26,7 @@ const defaultCellIdentifierFn = function (branch) {
 }
 
 const walk = function (branch, branchRoots, branchName, cellIdentifierFn) {
+  if (typeof branch !== 'object') throw new Error('can not walk ' + typeof branch + ' at ' + branchRoots.join('.') + '#' + branchName)
   let results = []
   let isCell = cellIdentifierFn(branch)
   if (isCell) {
@@ -41,7 +42,7 @@ const walk = function (branch, branchRoots, branchName, cellIdentifierFn) {
     branchRoots = branchRoots.concat([branchName])
   }
   for (let key in branch) {
-    if (typeof branch !== 'object') continue
+    if (typeof branch[key] !== 'object') continue
     results = results.concat(walk(branch[key], branchRoots, key, cellIdentifierFn))
   }
   return results
