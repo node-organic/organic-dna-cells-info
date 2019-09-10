@@ -1,6 +1,6 @@
 {
   "name": "organic-dna-cells-info",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "extract cells info from dna branch",
   "main": "index.js",
   "scripts": {
