@@ -17,9 +17,7 @@
   * `dnaBranchPath` contains dot notated dna branch path
 */
 module.exports = function (dnaBranch, cellIdentifierFn) {
-  console.log('HERE')
   let r = walk(dnaBranch, [], '', cellIdentifierFn || defaultCellIdentifierFn)
-  console.log('OUTER')
   return r
 }
 
