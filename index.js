@@ -17,7 +17,10 @@
   * `dnaBranchPath` contains dot notated dna branch path
 */
 module.exports = function (dnaBranch, cellIdentifierFn) {
-  return walk(dnaBranch, [], '', cellIdentifierFn || defaultCellIdentifierFn)
+  console.log('HERE')
+  let r = walk(dnaBranch, [], '', cellIdentifierFn || defaultCellIdentifierFn)
+  console.log('OUTER')
+  return r
 }
 
 const defaultCellIdentifierFn = function (branch) {
@@ -43,7 +46,6 @@ const walk = function (branch, branchRoots, branchName, cellIdentifierFn) {
     branchRoots = branchRoots.concat([branchName])
   }
   for (let key in branch) {
-    if (branch[key] === null) console.log(branchRoots)
     if (!branch[key] || typeof branch[key] !== 'object') continue
     results = results.concat(walk(branch[key], branchRoots, key, cellIdentifierFn))
   }
