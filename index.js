@@ -1,24 +1,36 @@
 /**
-  Scans `dnaBranch` and returns Array of
-
-  CellInfo {
-    name: String,
-    dna: DNA,
-    groups: Array[String],
-    dnaBranchPath: String
-  }
-
-  where properties are computed as follows:
-
-  * `name` reflects to dna branch having both `cellKind` and `cellInfo` properties
-  * `dna` reflects to the dna branch itself
-  * `groups` reflects to the branch.groups concatinated with the branch's
-   path split as single names
-  * `dnaBranchPath` contains dot notated dna branch path
-*/
-module.exports = function (dnaBranch, cellIdentifierFn) {
+ * Scans `dnaBranch` and returns Array of
+ *
+ * CellInfo {
+ *   name: String,
+ *   dna: DNA,
+ *   groups: Array[String],
+ *   dnaBranchPath: String
+ * }
+ *
+ * where properties are computed as follows:
+ *
+ * * `name` reflects to dna branch having both `cellKind` and `cellInfo` properties
+ * * `dna` reflects to the dna branch itself
+ * * `groups` reflects to the branch.groups concatinated with the branch's
+ *  path split as single names
+ * * `dnaBranchPath` contains dot notated dna branch path
+ */
+module.exports.getAllCells = function (dnaBranch, cellIdentifierFn) {
   let r = walk(dnaBranch, [], '', cellIdentifierFn || defaultCellIdentifierFn)
   return r
+}
+
+/**
+ * Returns the first found cell using `getAllCells` matched by name
+ */
+module.exports.getCell = function (dnaBranch, cellName, cellIdentifierFn) {
+  const cells = module.exports.getAllCells(dnaBranch, cellIdentifierFn)
+  for (let i = 0; i < cells.length; i++) {
+    if (cells[i].name === cellName) {
+      return cells[i]
+    }
+  }
 }
 
 const defaultCellIdentifierFn = function (branch) {

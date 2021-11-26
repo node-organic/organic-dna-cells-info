@@ -1,6 +1,6 @@
 # organic-dna-cells-info
 
-extract cells info from dna branch
+extract cells info from dna branch based on `cellInfo: v1` schema
 
 ## usage
 
@@ -35,8 +35,9 @@ const dnaBranch = {
   }
 }
 
-const cells = require('organic-dna-cells-info')(dnaBranch)
-console.log(cells) // will print Array of CellInfo structures
+const {getAllCells, getCell} = require('organic-dna-cells-info')
+console.log(getAllCells(dnaBranch)) // will print Array of CellInfo structures
+console.log(getCell(dnaBranch, 'supervisor')) // will pring only supervisor CellInfo
 ```
 
 ## CellInfo
@@ -50,9 +51,19 @@ console.log(cells) // will print Array of CellInfo structures
 }
 ```
 
+### CellInfo v1 schema
+
+Cells to be found should follow the schema as their cell DNA:
+
+```
+{
+  cellKind: String,
+  cellInfo: "v1"
+}
+```
+
 ## notes
 
 Cells are deep searched within given dna branch structure:
 
-* every dna branch holding `cellKind` and `cellInfo` properties is considered a cell
 * cell's groups are formed by their (deep) nesting level path concatenated with their implicit `groups` or `group` values

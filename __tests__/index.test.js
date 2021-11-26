@@ -1,4 +1,4 @@
-const extract = require('../index')
+const {getAllCells, getCell} = require('../index')
 test('extract cells info', () => {
   const dnaBranch = {
     'apis': {
@@ -31,7 +31,7 @@ test('extract cells info', () => {
       }
     }
   }
-  let cells = extract(dnaBranch)
+  let cells = getAllCells(dnaBranch)
   expect(cells.length).toBe(4)
   expect(cells[0].name).toBe('apis')
   expect(cells[0].dna.cwd).toBe('./apis')
@@ -46,4 +46,8 @@ test('extract cells info', () => {
   expect(cells[3].dna.cwd).toBe('./client')
   expect(cells[3].groups).toEqual(['webapps', '2018'])
   expect(cells[3].dnaBranchPath).toBe('webapps.2018.client')
+
+  let oneCell = getCell(dnaBranch, 'apis')
+  expect(oneCell).toBeDefined()
+  expect(oneCell.name).toBe('apis')
 })
