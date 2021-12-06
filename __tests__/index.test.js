@@ -1,37 +1,37 @@
-const {getAllCells, getCell} = require('../index')
+const { getAllCells, getCell } = require('../index')
 test('extract cells info', () => {
   const dnaBranch = {
-    'apis': {
-      'v1': {
-        'name': 'legacy-v1',
-        'cellInfo': 'v1',
-        'cellKind': 'test',
-        'groups': ['legacy'],
-        'build': {}
+    apis: {
+      v1: {
+        name: 'legacy-v1',
+        cellInfo: 'v1',
+        cellKind: 'test',
+        groups: ['legacy'],
+        build: {}
       },
-      'v2': {
-        'cwd': './v2',
-        'cellInfo': 'v1',
-        'cellKind': 'test',
-        'build': {}
+      v2: {
+        cwd: './v2',
+        cellInfo: 'v1',
+        cellKind: 'test',
+        build: {}
       },
-      'cwd': './apis',
-      'build': {},
-      'cellInfo': 'v1',
-      'cellKind': 'test'
+      cwd: './apis',
+      build: {},
+      cellInfo: 'v1',
+      cellKind: 'test'
     },
-    'webapps': {
-      '2018': {
-        'client': {
-          'cwd': './client',
-          'build': {},
-          'cellInfo': 'v1',
-          'cellKind': 'test',
+    webapps: {
+      2018: {
+        client: {
+          cwd: './client',
+          build: {},
+          cellInfo: 'v1',
+          cellKind: 'test',
         }
       }
     }
   }
-  let cells = getAllCells(dnaBranch)
+  const cells = getAllCells(dnaBranch)
   expect(cells.length).toBe(4)
   expect(cells[0].name).toBe('apis')
   expect(cells[0].dna.cwd).toBe('./apis')
@@ -47,7 +47,7 @@ test('extract cells info', () => {
   expect(cells[3].groups).toEqual(['webapps', '2018'])
   expect(cells[3].dnaBranchPath).toBe('webapps.2018.client')
 
-  let oneCell = getCell(dnaBranch, 'apis')
+  const oneCell = getCell(dnaBranch, 'apis')
   expect(oneCell).toBeDefined()
   expect(oneCell.name).toBe('apis')
 })

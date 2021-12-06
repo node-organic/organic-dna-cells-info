@@ -17,7 +17,7 @@
  * * `dnaBranchPath` contains dot notated dna branch path
  */
 module.exports.getAllCells = function (dnaBranch, cellIdentifierFn) {
-  let r = walk(dnaBranch, [], '', cellIdentifierFn || defaultCellIdentifierFn)
+  const r = walk(dnaBranch, [], '', cellIdentifierFn || defaultCellIdentifierFn)
   return r
 }
 
@@ -42,9 +42,9 @@ const walk = function (branch, branchRoots, branchName, cellIdentifierFn) {
   if (typeof branch !== 'object') throw new Error('can not walk ' + typeof branch + ' at ' + branchRoots.join('.') + '#' + branchName)
   if (branch === null) throw new Error('can not access null branch')
   let results = []
-  let isCell = cellIdentifierFn(branch)
+  const isCell = cellIdentifierFn(branch)
   if (isCell) {
-    let cellInfo = {
+    const cellInfo = {
       name: branch.name || branchName,
       dna: branch,
       groups: consolidateGroups(branchRoots, branch),
@@ -55,7 +55,7 @@ const walk = function (branch, branchRoots, branchName, cellIdentifierFn) {
   if (branchName) {
     branchRoots = branchRoots.concat([branchName])
   }
-  for (let key in branch) {
+  for (const key in branch) {
     if (!branch[key] || typeof branch[key] !== 'object') continue
     results = results.concat(walk(branch[key], branchRoots, key, cellIdentifierFn))
   }
